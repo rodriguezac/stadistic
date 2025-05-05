@@ -4,26 +4,11 @@ import axios from 'axios';
 const Stadistic = () => {
   const [estadisticas, setEstadisticas] = useState({ porDia: 0, porSemana: 0, porMes: 0 });
 
-  const obtenerToken = async () => {
-    try {
-      const response = await axios.post('http://127.0.0.1:8000/oauth/token', {
-        grant_type: 'client_credentials',
-        client_id: '9ecb8739-f6c0-48a6-9b70-b557e1926b4f',
-        client_secret: 'ZPbBvhNXihrnFySWY4lO3G6B1WfiRTo1Fq7JxZp8',
-        scope: '*'
-      });
-      return response.data.access_token;
-    } catch (error) {
-      console.error('Error al obtener el token:', error);
-      return null;
-    }
-  };
+  // Usa directamente el token fijo
+  const token = "AQUÍ_VA_EL_TOKEN_COMPLETO_DE_TUS_COMPAÑEROS";
 
   useEffect(() => {
     const cargarDatos = async () => {
-      const token = await obtenerToken();
-      if (!token) return;
-
       try {
         const response = await axios.get('http://127.0.0.1:8000/api/v1/students', {
           headers: { Authorization: `Bearer ${token}` }
@@ -47,7 +32,7 @@ const Stadistic = () => {
 
         setEstadisticas({ porDia, porSemana, porMes });
       } catch (error) {
-        console.error('Error al obtener estudiantes:', error);
+        console.error('❌ Error al obtener estudiantes:', error);
       }
     };
 
